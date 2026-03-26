@@ -117,7 +117,6 @@ flowchart TD
 | **Homograph/IDN Attacks** (Cyrillic `а` ↔ Latin `a`) | NFKC normalization + IDNA 2008 Punycode | Add confusable character distance scoring |
 | **Phishing URLs Dataset** | Trained on 26.5M+ real-world samples | Monthly LoRA fine-tuning on fresh threat feeds |
 | **Polymorphic Query Strings** | Tracker stripping (50+ params) + deterministic sorting | Add query-value entropy binning |
-| **Brand Impersonation Variations** | 60+ flag detectors | Expand known-brand dictionary quarterly |
 
 ### Continuous Learning Strategy
 
