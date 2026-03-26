@@ -50,7 +50,7 @@ flowchart TD
 │  STEP 0: ELITE INGESTION & DE-PADDING                                    │
 ├──────────────────────────────────────────────────────────────────────────┤
 │  • PADDING STRIP:  Remove whitespace and junk (" " → "")  
-│  • PROTOCOL FIX:   Induce "http://" for schemeless inputs -> Input: 192.168.0.10/dashboard --> http://192.168.0.10dashboard│             
+│  • PROTOCOL FIX:   Induce "http://" for schemeless inputs -> Input: 192.168.0.10/dashboard --> http://192.168.0.10/dashboard│             
 │  • IP CANONICAL:   Resolve Decimal, Hex, Octal, Mixed-base (0x7f.1 -> 127.0.0.1)(Elite Unmasking)│
 │  • LOCAL REJECT:   Drop private/local IPs (if configured)                │
 │  • UNIVERSAL LC:   Enforce lowercase (Parity with MiniLM Uncased)        │
