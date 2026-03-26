@@ -35,28 +35,28 @@ This document addresses the seven technical items outlined by the Samsung team. 
 │     • γ=2.5 — Forces model to focus on hard misclassified samples            │
 │     • α=[0.284, 0.716] — Exact mathematical inverse of class ratio           │
 │     • Label Smoothing=0.05 — Improved probability calibration at             │
-│       extreme decision thresholds (critical for sub-1% FPR)                  │
+│       Prevent overconfidence extreme decision thresholds (critical for sub-1% FPR)                  │
 │                                                                              │
 │  2. ENHANCED KPI EVALUATOR (120-Point Threshold Sweep)                       │
-│     • Sweeps 120 thresholds from 0.25 to 0.85 (step=0.005)                  │
-│     • Filters thresholds satisfying BOTH FPR ≤ 1% AND FNR ≤ 10%            │
+│     • Sweeps 120 thresholds from 0.25 to 0.85 (step=0.005)                   │
+│     • Filters thresholds satisfying BOTH FPR ≤ 1% AND FNR ≤ 10%              │
 │     • Selects threshold maximizing F1 among valid candidates                 │
 │     • Fallback: Minimum-violation compromise if no valid threshold           │
 │                                                                              │
 │  3. HIGH-CAPACITY LoRA ADAPTERS                                              │
-│     • r=32, α=64 across 5 target modules (query, key, value, dense,         │
+│     • r=32, α=64 across 5 target modules (query, key, value, dense,          │
 │       output.dense) for maximum edge-case memorization                       │
 │     • Keeps 97%+ base parameters frozen — zero catastrophic forgetting       │
 │                                                                              │
 │  4. OPTIMIZED CLASSIFIER BOTTLENECK                                          │
-│     • 384→192→64→2 head with LayerNorm + GELU activations                   │
+│     • 384→192→64→2 head with LayerNorm + GELU activations                    │
 │     • Xavier Normal initialization (gain=0.02) for training stability        │
 │                                                                              │
 │  5. TRAINING INFRASTRUCTURE                                                  │
-│     • AMP (Mixed Precision): ~2× GPU throughput, FP16 forward/backward      │
-│     • Gradient Accumulation: Effective batch=256 for stable gradients         │
-│     • Cosine LR Schedule: 3% warmup, cosine decay to 0.001× peak LR         │
-│     • Crash-Safe Checkpoints: Atomic .pt.tmp → .pt writes                   │
+│     • AMP (Mixed Precision): ~2× GPU throughput, FP16 forward/backward       │
+│     • Gradient Accumulation: Effective batch=256 for stable gradients        │
+│     • Cosine LR Schedule: 3% warmup, cosine decay to 0.001× peak LR          │
+│     • Crash-Safe Checkpoints: Atomic .pt.tmp → .pt writes                    │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -117,6 +117,7 @@ flowchart TD
 | **Homograph/IDN Attacks** (Cyrillic `а` ↔ Latin `a`) | NFKC normalization + IDNA 2008 Punycode | Add confusable character distance scoring |
 | **Phishing URLs Dataset** | Trained on 26.5M+ real-world samples | Monthly LoRA fine-tuning on fresh threat feeds |
 | **Polymorphic Query Strings** | Tracker stripping (50+ params) + deterministic sorting | Add query-value entropy binning |
+| **Brand Impersonation Variations** | 60+ flag detectors | Expand known-brand dictionary quarterly |
 
 ### Continuous Learning Strategy
 
@@ -142,7 +143,7 @@ flowchart TD
 │  └────────────┴────────────────────────────────────────────────┘             │
 │                                                                              │
 │  ADAPTER VERSIONING:                                                         │
-│  • Each LoRA checkpoint tagged with date + threat-feed hash                  │      │
+│  • Each LoRA checkpoint tagged with date + threat-feed hash                  │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -162,18 +163,22 @@ Our pipeline performs **8 specialized URL-specific transformation steps** before
 │                                                                              │
 │  1. ELITE IP UNMASKING                                                       │
 │     • Hex IP:    0x7f000001  →  127.0.0.1                                    │
-│     • Octal IP:  0177.0.0.1 →  127.0.0.1                                    │
+│     • Octal IP:  0177.0.0.1 →  127.0.0.1                                     │
 │     • Decimal:   2130706433  →  127.0.0.1                                    │
 │     → Exposes IP-based phishing hidden behind non-standard formats           │
 │                                                                              │
 │  2. RECURSIVE PERCENT DECODING (20 PASSES)                                   │
-│     • Input:  %252525252525253d  (11 layers)                                 │
-│     • Output: =                                                              │
+│      • Input: %2525252525252540 (represents 10 layers of encoding)           │
+│            Step‑by‑step:                                                     │
+│                %25 → %                                                       │
+│                After recursive decoding, you eventually get %40              │
+│                %40 is the ASCII code for @                                   │
+│       • Output: @                                                            │
 │     → Ensures no obfuscated payload can hide from the parser                 │
 │                                                                              │
 │  3. QUERY STRING PRE-DECODING                                                │
 │     • Raw query is fully decoded BEFORE parameter splitting                  │
-│     • Exposes hidden '&' and '=' delimiters masked by %26 / %3d            │
+│     • Exposes hidden '&' and '=' delimiters masked by %26 / %3d              │
 │     → Critical for detecting parameter injection attacks                     │
 │                                                                              │
 │  4. UNICODE HOMOGLYPH COLLAPSE (NFKC)                                        │
@@ -186,11 +191,11 @@ Our pipeline performs **8 specialized URL-specific transformation steps** before
 │     → Reveals the actual target path behind traversal noise                  │
 │                                                                              │
 │  6. BLOB ABSTRACTION (HEX/BASE64)                                            │
-│     • Long random strings → <HEX_BLOB> or <BASE64_BLOB>                     │
+│     • Long random strings → <HEX_BLOB> or <BASE64_BLOB>                      │
 │     → Normalizes payload noise into consistent structural tokens             │
 │                                                                              │
 │  7. TRACKER PARAMETER STRIPPING                                              │
-│     • Removes 50+ tracking params: utm_*, gclid, fbclid, mc_eid, etc.       │
+│     • Removes 50+ tracking params: utm_*, gclid, fbclid, mc_eid, etc.        │
 │     → Eliminates "benign noise" that obscures phishing query signals         │
 │                                                                              │
 │  8. TOKENIZER-SAFE ENCODING                                                  │
@@ -206,7 +211,10 @@ Our pipeline performs **8 specialized URL-specific transformation steps** before
 | :--- | :--- | :--- |
 | 1 | **URL Shortener Expansion** — Resolve bit.ly, tinyurl, t.co redirects before analysis | Unmasks hidden destinations |
 | 2 | **Redirect URL Analysis** — Follow HTTP 3xx chains to capture the final landing page | Detects phishing sites that hide behind multiple redirects |
-
+                                        * Input: http://short.example.com/abc
+                                        * Server response: 302 Found → Location: http://redirector.net/xyz
+                                        * Follow chain: eventually leads to http://malicious-site.com/login
+                                        * Output: http://malicious-site.com/login
 ---
 
 ## 📌 Item 4 — Optimizing for Sub-1% False Positive Rate
@@ -222,56 +230,56 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 │                                                                              │
 │  LAYER 1: LOSS FUNCTION DESIGN                                               │
 │  ┌────────────────────────────────────────────────────────┐                  │
-│  │  Focal Loss: FL(pₜ) = -αₜ · (1 - pₜ)^γ · log(pₜ)    │                  │
+│  │  Focal Loss: FL(pₜ) = -αₜ · (1 - pₜ)^γ · log(pₜ)          │                  │
 │  │                                                        │                  │
 │  │  • α₀ = 0.284 (Benign class weight — LOW)              │                  │
-│  │    → Model pays LESS penalty for missing phishing       │                  │
+│  │    → Model pays LESS penalty for missing phishing      │                  │
 │  │  • α₁ = 0.716 (Phishing class weight — HIGH)           │                  │
-│  │    → Model pays MORE penalty for missing phishing       │                  │
+│  │    → Model pays MORE penalty for missing phishing      │                  │
 │  │                                                        │                  │
-│  │  NET EFFECT ON FPR:                                     │                  │
-│  │  The LOW α₀ makes the model MORE CONSERVATIVE about     │                  │
-│  │  labeling benign URLs as phishing. It "hesitates"        │                  │
-│  │  before flagging legitimate traffic — directly reducing │                  │
-│  │  False Positives.                                        │                  │
+│  │  NET EFFECT ON FPR:                                    │                  │
+│  │  The LOW α₀ makes the model MORE CONSERVATIVE about    │                  │
+│  │  labeling benign URLs as phishing. It "hesitates"      │                  │
+│  │  before flagging legitimate traffic — directly reducing│                  │
+│  │  False Positives.                                      │                  │
 │  │                                                        │                  │
 │  │  • γ = 2.5 — Down-weights "easy" benign samples that   │                  │
-│  │    the model already classifies correctly; forces        │                  │
-│  │    attention on the ambiguous boundary cases.            │                  │
+│  │    the model already classifies correctly; forces      │                  │
+│  │    attention on the ambiguous boundary cases.          │                  │
 │  └────────────────────────────────────────────────────────┘                  │
 │                                                                              │
 │  LAYER 2: THRESHOLD OPTIMIZATION                                             │
 │  ┌────────────────────────────────────────────────────────┐                  │
-│  │  Post-training 120-point threshold sweep (0.25 → 0.85)  │                  │
+│  │  Post-training 120-point threshold sweep (0.25 → 0.85) │                  │
 │  │                                                        │                  │
 │  │  HARD CONSTRAINT:  FPR ≤ 1%   (non-negotiable)         │                  │
-│  │  SOFT CONSTRAINT:  FNR ≤ 10%  (maximize within FPR)     │                  │
+│  │  SOFT CONSTRAINT:  FNR ≤ 10%  (maximize within FPR)    │                  │
 │  │                                                        │                  │
-│  │  The optimizer FIRST filters all thresholds where        │                  │
-│  │  FPR ≤ 1%, then among those, selects the one that       │                  │
-│  │  maximizes F1 (which inherently minimizes FNR).          │                  │
+│  │  The optimizer FIRST filters all thresholds where      │                  │
+│  │  FPR ≤ 1%, then among those, selects the one that      │                  │
+│  │  maximizes F1 (which inherently minimizes FNR).        │                  │
 │  └────────────────────────────────────────────────────────┘                  │
 │                                                                              │
 │  LAYER 3: PREPROCESSING NOISE REDUCTION                                      │
-│  ┌────────────────────────────────────────────────────────┐                  │
-│  │  • Tracker stripping eliminates benign-but-noisy params  │                  │
-│  │    (utm_*, gclid, fbclid) that could falsely trigger     │                  │
-│  │    phishing signals                                      │                  │
-│  │  • Blob masking normalizes legitimate hex/base64         │                  │
-│  │    payloads (e.g., session tokens) into neutral tokens   │                  │
-│  │  • Path traversal resolution prevents legitimate         │                  │
-│  │    redirect paths from looking suspicious                │                  │
-│  └────────────────────────────────────────────────────────┘                  │
+│  ┌─────────────────────────────────────────────────────────┐                 │
+│  │  • Tracker stripping eliminates benign-but-noisy params │                 │
+│  │    (utm_*, gclid, fbclid) that could falsely trigger    │                 │
+│  │    phishing signals                                     │                 │
+│  │  • Blob masking normalizes legitimate hex/base64        │                 │
+│  │    payloads (e.g., session tokens) into neutral tokens  │                 │
+│  │  • Path traversal resolution prevents legitimate        │                 │
+│  │    redirect paths from looking suspicious               │                 │
+│  └─────────────────────────────────────────────────────────┘                 │
 │                                                                              │
 │  LAYER 4: LABEL SMOOTHING (0.05)                                             │
-│  ┌────────────────────────────────────────────────────────┐                  │
-│  │  Hard targets [0, 1] → Soft targets [0.025, 0.975]      │                  │
-│  │                                                        │                  │
-│  │  IMPACT: Prevents model from being overconfident on      │                  │
-│  │  borderline cases. At extreme decision boundaries        │                  │
-│  │  (high thresholds needed for sub-1% FPR), calibrated    │                  │
-│  │  probabilities are essential for reliable classification. │                  │
-│  └────────────────────────────────────────────────────────┘                  │
+│  ┌────────────────────────────────────────────────────────────┐              │
+│  │  Hard targets [0, 1] → Soft targets [0.025, 0.975]         │              │
+│  │                                                            │              │
+│  │  IMPACT: Prevents model from being overconfident on        │              │
+│  │  borderline cases. At extreme decision boundaries          │              │
+│  │  (high thresholds needed for sub-1% FPR), calibrated       │              │
+│  │  probabilities are essential for reliable classification.  │              │
+│  └────────────────────────────────────────────────────────────┘              │  
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -289,33 +297,33 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 │                                                                              │
 │  STAGE 1: NORMALIZATION (NFKC Standard)                                      │
 │  ┌────────────────────────────────────────────────────────────┐              │
-│  │  Unicode Normalization Form KC (Compatibility Composition)  │              │
+│  │  Unicode Normalization Form KC (Compatibility Composition) │              │
 │  │                                                            │              │
-│  │  • Decomposes then recomposes characters canonically        │              │
-│  │  • Collapses visually identical but code-point-different    │              │
-│  │    characters into a single standard form                   │              │
+│  │  • Decomposes then recomposes characters canonically       │              │
+│  │  • Collapses visually identical but code-point-different   │              │
+│  │    characters into a single standard form                  │              │
 │  │                                                            │              │
-│  │  Examples:                                                  │              │
-│  │  ─────────────────────────────────────────────────          │              │
-│  │  Input (attack):   pаypal.com  (Cyrillic 'а', U+0430)     │              │
+│  │  Examples:                                                 │              │
+│  │  ─────────────────────────────────────────────────         │              │
+│  │  Input (attack):   pаypal.com  (Cyrillic 'а', U+0430)      │              │
 │  │  NFKC Output:      paypal.com  (Latin 'a', U+0061)         │              │
 │  │                                                            │              │
-│  │  Input (attack):   ５.com      (Fullwidth digit '５')       │              │
+│  │  Input (attack):   ５.com      (Fullwidth digit '５')      │              │
 │  │  NFKC Output:      5.com       (ASCII '5')                 │              │
 │  │                                                            │              │
-│  │  Input (attack):   ℬank.com    (Script B, U+212C)          │              │
+│  │  Input (attack):   ℬank.com    (Script B, U+212C)         │              │
 │  │  NFKC Output:      bank.com    (Latin 'B')                 │              │
 │  └────────────────────────────────────────────────────────────┘              │
 │                                                                              │
 │  STAGE 2: IDNA 2008 PUNYCODE ENCODING                                        │
 │  ┌────────────────────────────────────────────────────────────┐              │
-│  │  Internalized Domain Names in Applications (latest RFC)     │              │
+│  │  Internalized Domain Names in Applications (latest RFC)    │              │
 │  │                                                            │              │
 │  │  • Converts IDN domains to Punycode for structural parity  │              │
 │  │  • Input:  münchen.de                                      │              │
 │  │  • Output: xn--mnchen-3ya.de                               │              │
 │  │                                                            │              │
-│  │  → Ensures consistent tokenization regardless of script     │              │
+│  │  → Ensures consistent tokenization regardless of script    │              │
 │  └────────────────────────────────────────────────────────────┘              │
 │                                                                              │
 │  STAGE 3: TOKENIZER-SAFE HEX ENCODING                                        │
@@ -336,14 +344,14 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 
 ### Coverage Matrix
 
-| Unicode Threat | Technique | Defense Status |
-| :--- | :--- | :--- |
-| **Homograph Attacks** | Cyrillic/Greek look-alikes | ✅ NFKC normalization |
-| **Fullwidth Characters** | `ｈｔｔｐ://ｍａｌｉｃｉｏｕｓ.ｃｏｍ` | ✅ NFKC decomposition |
-| **RTL Override** | Unicode bidi control chars | ✅ Stripped during normalization |
-| **Punycode Domains** | `xn--pypal-4ve.com` | ✅ IDNA 2008 encoding/decoding |
-| **Mixed-Script Spoofing** | Latin + Cyrillic in same domain | ✅ NFKC + lowercasing |
-| **Non-BMP Characters** | Emoji/symbol domains (𝕓𝕒𝕟𝕜.com) | ✅ NFKC compatibility mapping |
+| Unicode Threat | Technique | Example | Defense Status | Result/Output |
+| --- | --- | --- | --- | --- |
+| **Homograph Attacks** | Cyrillic/Greek look‑alikes | ``раураl.com`` (Cyrillic “раураl” looks like “paypal”) | ✅ NFKC normalization | Normalized to ``paypal.com`` |
+| **Fullwidth Characters** | Fullwidth letters | ``ｈｔｔｐ://ｍａｌｉｃｉｏｕｓ.ｃｏｍ`` | ✅ NFKC decomposition | Normalized to ``http://malicious.com`` |
+| **RTL Override** | Unicode bidi control chars | ``http://evil.com/‮moc.elgoog`` | ✅ Stripped during normalization | Normalized to ``http://evil.com/google.com`` |
+| **Punycode Domains** | IDN encoded domains | ``xn--pypal-4ve.com`` | ✅ IDNA 2008 encoding/decoding | Decoded to ``paypal.com`` |
+| **Mixed‑Script Spoofing** | Latin + Cyrillic mix | ``payраl.com`` (Latin “pay” + Cyrillic “раl”) | ✅ NFKC + lowercasing | Normalized to ``paypal.com`` |
+| **Non‑BMP Characters** | Emoji/symbol domains | ``🦄bank.com`` or ``𝕓𝕒𝕟𝕜.com`` | ✅ NFKC compatibility mapping | Normalized to ``bank.com`` |
 
 ---
 
@@ -359,15 +367,15 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 │  WHAT WE DETECT TODAY:                                                       │
 │                                                                              │
 │  1. BLOB/PAYLOAD DETECTION                                                   │
-│     • Base64-encoded file payloads in URL path → <BASE64_BLOB>              │
-│     • Hex-encoded binary payloads in URL path  → <HEX_BLOB>                │
-│     • Long random query parameters (tokens)    → masked for consistency     │
+│     • Base64-encoded file payloads in URL path → <BASE64_BLOB>               │
+│     • Hex-encoded binary payloads in URL path  → <HEX_BLOB>                  │
+│     • Long random query parameters (tokens)    → masked for consistency      │
 │                                                                              │
 │  2. SECURITY FLAG DETECTORS (Relevant to File Hosting)                       │
-│     • EXECUTABLE_EXTENSION — .exe, .bat, .cmd, .ps1 in path                │
-│     • SUSPICIOUS_REDIRECT — Multiple redirect hops detected                 │
-│     • ENCODED_PAYLOAD — High-entropy encoded segments in path               │
-│     • DATA_URI — data: protocol abuse detection                             │
+│     • EXECUTABLE_EXTENSION — .exe, .bat, .cmd, .ps1 in path                  │
+│     • SUSPICIOUS_REDIRECT — Multiple redirect hops detected                  │
+│     • ENCODED_PAYLOAD — High-entropy encoded segments in path                │
+│     • DATA_URI — data: protocol abuse detection                              │
 │                                                                              │                │
 │                                                                              │
 │  WHAT'S NEXT (PROPOSED ENHANCEMENTS):                                        │
@@ -379,11 +387,11 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 │                                                                              │
 │  2. FILE TYPE RISK SCORING                                                   │
 │     • Extract file extension from path/query                                 │
-│     • Risk tiers: CRITICAL (.exe, .scr, .msi) / HIGH (.zip, .rar)          │
-│       / MEDIUM (.docx, .pdf) / LOW (.jpg, .png)                             │
+│     • Risk tiers: CRITICAL (.exe, .scr, .msi) / HIGH (.zip, .rar)            │
+│       / MEDIUM (.docx, .pdf) / LOW (.jpg, .png)                              │
 │                                                                              │
 │  3. SHARING LINK PATTERN DETECTION                                           │
-│     • Detect "/s/", "/d/", "/file/d/", "/sharing/" patterns                 │
+│     • Detect "/s/", "/d/", "/file/d/", "/sharing/" patterns                  │
 │     • Flag direct-download vs preview links                                  │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
@@ -402,36 +410,36 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 │                                                                              │
 │  STAGE 1: ELITE IP FORMAT UNMASKING                                          │
 │  ┌────────────────────────────────────────────────────────────┐              │
-│  │  Attackers use non-standard IP formats to evade detection.  │              │
-│  │  Our pipeline normalizes ALL formats to dotted-decimal:     │              │
+│  │  Attackers use non-standard IP formats to evade detection. │              │
+│  │  Our pipeline normalizes ALL formats to dotted-decimal:    │              │
 │  │                                                            │              │
 │  │  Format          Example           Normalized              │              │
 │  │  ──────────────  ────────────────  ──────────────          │              │
 │  │  Hexadecimal     0x7f000001        127.0.0.1               │              │
 │  │  Octal           0177.0.0.01       127.0.0.1               │              │
-│  │  Decimal Integer  2130706433        127.0.0.1               │              │
+│  │  Decimal Integer  2130706433        127.0.0.1              │              │
 │  │  Mixed Format    0x7f.0.0.1        127.0.0.1               │              │
 │  │  IPv6 Mapped     ::ffff:7f00:1     127.0.0.1               │              │
-│  │  Overflow         0x7f.0x100000001  Detected & flagged      │              │
+│  │  Overflow         0x7f.0x100000001  Detected & flagged     │              │
 │  └────────────────────────────────────────────────────────────┘              │
 │                                                                              │
 │  STAGE 2: REVERSE DNS RESOLUTION (5-Second Precision Timeout)                │
-│  ┌────────────────────────────────────────────────────────────┐              │
-│  │  • For IP-based URLs, pipeline attempts reverse DNS         │              │
-│  │  • If resolved: Domain is injected for full reprocessing    │              │
-│  │  • If unresolved: IP retained with "IP_URL" security flag   │              │
-│  │  • 5.0s timeout captures slow residential/mobile botnet IPs │              │
-│  └────────────────────────────────────────────────────────────┘              │
+│  ┌─────────────────────────────────────────────────────────────┐             │
+│  │  • For IP-based URLs, pipeline attempts reverse DNS         │             │
+│  │  • If resolved: Domain is injected for full reprocessing    │             │
+│  │  • If unresolved: IP retained with "IP_URL" security flag   │             │
+│  │  • 5.0s timeout captures slow residential/mobile botnet IPs │             │
+│  └─────────────────────────────────────────────────────────────┘             │
 │                                                                              │
 │  STAGE 3: IP-SPECIFIC SECURITY FLAGS                                         │
 │  ┌────────────────────────────────────────────────────────────┐              │
-│  │  The following flags are automatically triggered:           │              │
+│  │  The following flags are automatically triggered:          │              │
 │  │                                                            │              │
 │  │  • IP_URL           — URL uses raw IP instead of domain    │              │
 │  │  • PRIVATE_IP       — Detects 10.x, 172.16-31.x, 192.168.x │              │
-│  │  • LOCALHOST         — 127.x.x.x / ::1 detection          │              │
-│  │  • NON_STANDARD_PORT — Ports ≠ 80/443 flagged             │              │
-│  │  • HEX_IP_OBFUSCATION — Original format was hex/octal     │              │
+│  │  • LOCALHOST         — 127.x.x.x / ::1 detection           │              │
+│  │  • NON_STANDARD_PORT — Ports ≠ 80/443 flagged              │              │
+│  │  • HEX_IP_OBFUSCATION — Original format was hex/octal      │              │
 │  │                                                            │              │
 │  │  All flags are encoded into the 64-bit bitmask for the     │              │
 │  │  model's structural feature layer.                         │              │
@@ -439,14 +447,14 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 │                                                                              │
 │  STAGE 4: MODEL SIGNAL                                                       │
 │  ┌────────────────────────────────────────────────────────────┐              │
-│  │  The canonical URL output preserves the IP address in       │              │
-│  │  dotted-decimal format, giving the model a direct signal:   │              │
+│  │  The canonical URL output preserves the IP address in      │              │
+│  │  dotted-decimal format, giving the model a direct signal:  │              │
 │  │                                                            │              │
 │  │  Input:   http://0x43.0x1a.0x02.0xde:8080/login            │              │
-│  │  Output:  http://67.26.2.222:8080/login                     │              │
+│  │  Output:  http://67.26.2.222:8080/login                    │              │
 │  │                                                            │              │
-│  │  The model learns that IP-based URLs (especially with       │              │
-│  │  non-standard ports) correlate strongly with phishing.      │              │
+│  │  The model learns that IP-based URLs (especially with      │              │
+│  │  non-standard ports) correlate strongly with phishing.     │              │
 │  └────────────────────────────────────────────────────────────┘              │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
@@ -471,7 +479,7 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│                     IMPLEMENTATION STATUS DASHBOARD                           │
+│                     IMPLEMENTATION STATUS DASHBOARD                          │
 ├──────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
 │  #   Item                                  Status        Confidence          │
@@ -481,10 +489,10 @@ The sub-1% FPR target is the **hardest constraint** in phishing detection. A sin
 │  3   URL-Specific Modifications            ✅ Active     HIGH                │
 │  4   Sub-1% FPR Optimization               ✅ Active     HIGH                │
 │  5   Unicode URL Support                   ✅ Complete   VERIFIED            │
-│  6   File Hosting URL Support              🟡 Partial   MEDIUM              │
+│  6   File Hosting URL Support              🟡 Partial   MEDIUM               │
 │  7   IP URL Support                        ✅ Complete   VERIFIED            │
 │                                                                              │
-│  Overall Pipeline Maturity:  █████████░  90%                                │
+│  Overall Pipeline Maturity:  █████████░  90%                                 │
 │  Remaining Gap:  File hosting whitelist + type-risk scoring (Item 6)         │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
