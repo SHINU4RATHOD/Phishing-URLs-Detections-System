@@ -279,23 +279,23 @@ flowchart LR
 │                                                                              │
 │  STRATEGY (per epoch, on validation set):                                    │
 │                                                                              │
-│  1. Sweep 120 thresholds from 0.25 to 0.85 (step=0.005)                     │
+│  1. Sweep 120 thresholds from 0.25 to 0.85 (step=0.005)                      │
 │                                                                              │
 │  2. For EACH threshold, compute:                                             │
-│     ┌──────────────────────────────────────────┐                            │
-│     │  • FPR = FP / (FP + TN)   target ≤ 1%    │                            │
-│     │  • FNR = FN / (FN + TP)   target ≤ 10%   │                            │
+│     ┌──────────────────────────────────────────┐                             │
+│     │  • FPR = FP / (FP + TN)   target ≤ 1%    │                             │
+│     │  • FNR = FN / (FN + TP)   target ≤ 10%   │                             │
 │     │  • Precision               target ≥ 95%   │                            │
 │     │  • Recall                  target ≥ 95%   │                            │
 │     │  • Accuracy                target ≥ 98%   │                            │
 │     │  • F1 Score                               │                            │
 │     │  • AUC-ROC                                │                            │
 │     │  • Specificity, NPV                       │                            │
-│     └──────────────────────────────────────────┘                            │
+│     └──────────────────────────────────────────┘                             │
 │                                                                              │
-│  3. FILTER: Keep only thresholds where FPR ≤ 1% AND FNR ≤ 10%              │
+│  3. FILTER: Keep only thresholds where FPR ≤ 1% AND FNR ≤ 10%                │
 │                                                                              │
-│  4. SELECT: Among valid thresholds, pick the one maximizing F1              │
+│  4. SELECT: Among valid thresholds, pick the one maximizing F1               │
 │     (with fallback to minimum-violation if no valid threshold exists)        │
 │                                                                              │                          │
 │                                                                              │
