@@ -78,7 +78,7 @@ flowchart TD
 ┌──────────────────────────────────────────────────────────────────────────┐
 │  STEP 2: HOST NORMALIZATION                                              │
 ├──────────────────────────────────────────────────────────────────────────┤
-│  • NFKC + IDNA 2008 Punycode encoding                                   │
+│  • NFKC + IDNA 2008 Punycode encoding                                    │
 │  • Leading/Trailing dot stripping (.com. → com)                          │
 │  • Unicode homoglyph resolution via NFKC                                 │
 └──────────────────────────────────────────────────────────────────────────┘
@@ -90,7 +90,7 @@ flowchart TD
 ┌──────────────────────────────────────────────────────────────────────────┐
 │  STEP 3: PRECISION IP RESOLUTION (5s TIMEOUT)                            │
 ├──────────────────────────────────────────────────────────────────────────┤
-│  • Reverse DNS → Domain Injection → Full Restart                        │
+│  • Reverse DNS → Domain Injection → Full Restart                         │
 │  • 5.0 second precision to capture slow-responding ISP nodes             │
 │  • Captures residential and mobile botnet infrastructure                 │
 └──────────────────────────────────────────────────────────────────────────┘
@@ -118,7 +118,7 @@ flowchart TD
 ├──────────────────────────────────────────────────────────────────────────┤
 │  • TRACKER STRIP:   Remove 50+ tracking params (utm_*, gclid, fbclid)    │
 │  • DETERMINISTIC:   Sort params alphabetically (a=1&b=2)                 │
-│  • HEX ENFORCE:     Lowercase percent-encoding (%2A → %2a)              │
+│  • HEX ENFORCE:     Lowercase percent-encoding (%2A → %2a)               │
 │  • SESSION STRIP:   Remove session IDs and CSRF tokens                   │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
@@ -202,35 +202,35 @@ flowchart LR
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  8.1  MODEL ARCHITECTURE — MiniLM-L12-H384 + LoRA                           │
+│  8.1  MODEL ARCHITECTURE — MiniLM-L12-H384 + LoRA                            │
 ├──────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
 │  canonical_url ──▶ [WordPiece Tokenizer (max_len=192)] ──▶ token_ids        │
 │                                                                              │
-│  token_ids ──▶ ┌─────────────────────────────────────┐                      │
-│                │  MiniLM-L12-H384 Transformer          │                      │
-│                │  • 12 Attention Layers                 │                      │
-│                │  • 384-dim Hidden Size                 │                      │
-│                │  • 12 Attention Heads                  │                      │
-│                │  + LoRA Adapters on 5 target modules   │                      │
-│                │    ├─ query  ─┐                       │                      │
-│                │    ├─ key    ─┤  r=32, α=64           │                      │
-│                │    ├─ value  ─┤  dropout=0.05         │                      │
-│                │    ├─ dense  ─┤                       │                      │
-│                │    └─ output ─┘                       │                      │
-│                └─────────────────────────────────────┘                      │
+│  token_ids ──▶ ┌──────────────────────────────────────┐                     │ 
+│                │  MiniLM-L12-H384 Transformer          │                     │
+│                │  • 12 Attention Layers                │                     │
+│                │  • 384-dim Hidden Size                │                     │
+│                │  • 12 Attention Heads                 │                     │
+│                │  + LoRA Adapters on 5 target modules  │                     │
+│                │    ├─ query  ─┐                       │                     │
+│                │    ├─ key    ─┤  r=32, α=64           │                     │
+│                │    ├─ value  ─┤  dropout=0.05         │                     │
+│                │    ├─ dense  ─┤                       │                     │
+│                │    └─ output ─┘                       │                     │
+│                └────────────────────────────────────── ┘                     │
 │                              │                                               │
 │                     [CLS] Token Pooling                                      │
 │                              │                                               │
 │                         384-dim embedding                                    │
 │                              │                                               │
-│                ┌─────────────────────────────────┐                           │
-│                │  Classifier Head (Bottleneck)     │                           │
-│                │  384 → 192  (LayerNorm + GELU)    │                           │
-│                │  192 → 64   (LayerNorm + GELU)    │                           │
-│                │   64 → 2    (Binary Logits)       │                           │
-│                │  Dropout: 0.15 per block          │                           │
-│                │  Init: Xavier Normal (gain=0.02)   │                           │
+│                ┌──────────────────────────────────┐                          │
+│                │  Classifier Head (Bottleneck)    │                          │
+│                │  384 → 192  (LayerNorm + GELU)   │                          │
+│                │  192 → 64   (LayerNorm + GELU)   │                          │
+│                │   64 → 2    (Binary Logits)      │                          │
+│                │  Dropout: 0.15 per block         │                          │
+│                │  Init: Xavier Normal (gain=0.02) │                          │
 │                └─────────────────────────────────┘                           │
 │                              │                                               │
 │                     Softmax → P(phishing)                                    │
