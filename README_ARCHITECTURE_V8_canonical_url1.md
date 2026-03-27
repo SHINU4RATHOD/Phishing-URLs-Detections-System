@@ -145,9 +145,7 @@ flowchart TD
 │  STEP 7: ENRICHMENT & CATEGORIZATION                                     │
 ├──────────────────────────────────────────────────────────────────────────┤
 │  • CAT-FLAGS:       Trigger 60+ security detectors                       │
-│  • CATEGORIES:      16 primary groups (Brand, Script, TLD, etc.)         │
-│  • SEVERITY:        Weighted severity scoring across all flags            │
-│  • BITMASK:         64-bit flag bitmask for decision-layer fusion         │
+│  • CATEGORIES:      16 primary groups (Brand, Script, TLD, etc.)         │         │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
