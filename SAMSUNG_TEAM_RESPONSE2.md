@@ -211,21 +211,7 @@ IP-based phishing URLs (e.g., `http://192.168.1.1:8080/login`) use raw IP addres
 │  │  → No DNS lookup or network call is made.                   │             │
 │  └─────────────────────────────────────────────────────────────┘             │
 │                                                                              │
-│  STAGE 2: LOCAL SECURITY FLAG GENERATION (Offline Heuristics)                │
-│  ┌────────────────────────────────────────────────────────────┐              │
-│  │  The following flags are generated via local regex/logic:  │              │
-│  │                                                            │              │
-│  │  • IP_URL              — Detected via regex pattern match  │              │
-│  │  • PRIVATE_IP          — Checked against RFC 1918 ranges   │              │
-│  │  • LOCALHOST            — Compared to 127.0.0.0/8 and ::1  │              │
-│  │  • NON_STANDARD_PORT   — Port ∉ {80, 443}                  │              │
-│  │  • HEX_IP_OBFUSCATION  — Original had hex/octal format     │              │
-│  │                                                            │              │
-│  │  → All checks are local pattern matching and arithmetic.   │              │
-│  │  → Encoded into the 64-bit bitmask (offline computation).  │              │
-│  └────────────────────────────────────────────────────────────┘              │
-│                                                                              │
-│  STAGE 3: MODEL INFERENCE (Local GPU/CPU)                                    │
+│  STAGE 2: MODEL INFERENCE (Local GPU/CPU)                                    │
 │  ┌────────────────────────────────────────────────────────────┐              │
 │  │  The MiniLM model + LoRA adapters run entirely on-device:  │              │
 │  │                                                            │              │
