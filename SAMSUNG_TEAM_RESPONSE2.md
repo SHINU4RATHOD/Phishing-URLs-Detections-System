@@ -282,7 +282,6 @@ IP-based phishing URLs (e.g., `http://192.168.1.1:8080/login`) use raw IP addres
 │  normalize to expected levels.                                               │
 │                                                                              │
 │  KEY TAKEAWAY:                                                               │
-│  • Precision = 100% — When the model says "phishing", it is always correct   │
 │  • Recall = 89% — Catches 89% of Unicode phishing attacks                    │
 │  • F1 = 94% — Strong overall performance on this category                    │
 │  • FNR = 11% — 230 unicode phishing URLs evaded detection (improvement       │
