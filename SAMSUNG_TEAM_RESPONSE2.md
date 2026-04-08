@@ -438,13 +438,6 @@ The following categories have **zero representation** in the current training da
 │                              │  inspect the final destination. Detection     │
 │                              │  relies solely on surface-level patterns.     │
 │                              │                                               │
-│  IP-Based URL *              │  Present in data (124K+ samples across        │
-│                              │  IP_Address_Unusual_Port + Decimal_Hex_IP).   │
-│                              │  Detection works FULLY OFFLINE (see Item 3).  │
-│                              │  Listed here for visibility — this is a       │
-│                              │  SUPPORTED category with caveats.             │
-│                              │                                               │
-│  Blob_URL                    │  Zero samples: blob: protocol URLs            │
 │  Chrome_Internal_URL         │  Zero samples: chrome:// schema URLs          │
 │  Data_URL                    │  Zero samples: data: URI scheme URLs          │
 │  FTP_SFTP_URL                │  Zero samples: ftp:// / sftp:// protocol      │
