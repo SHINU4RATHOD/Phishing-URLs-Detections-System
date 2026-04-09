@@ -442,10 +442,7 @@ The following categories have **zero representation** in the current training da
 │  FTP_SFTP_URL                │  Zero samples: ftp:// / sftp:// protocol      │
 │  File_URL                    │  Zero samples: file:// protocol URLs          │
 │  JavaScript_URL              │  Zero samples: javascript: scheme URLs        │
-│  Telegram_Bot_URL            │  Zero samples: Telegram bot webhook URLs      │
-│  Unicode_URL                 │  Zero samples: Pure Unicode domain URLs       │
-│                              │  (Note: Unicode characters in paths ARE       │
-│                              │   handled via NFKC normalization)             │
+│  Telegram_Bot_URL            │  Zero samples: Telegram bot webhook URLs      │           │
 │                              │                                               │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
