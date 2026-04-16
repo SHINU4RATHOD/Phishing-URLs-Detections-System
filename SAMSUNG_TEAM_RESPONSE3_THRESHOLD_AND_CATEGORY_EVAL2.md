@@ -225,6 +225,12 @@ A decision threshold determines the probability cutoff at which the model classi
 ├──────────────────────────────────────────────────────────────────────────────┤
 │  RECOMMENDATIONS                                                             │
 ├──────────────────────────────────────────────────────────────────────────────┤
+│  1. HYBRID GLU FUSION MODEL (Next-Generation Architecture)                   │
+│     The current model uses ONLY text embeddings (MiniLM). The hybrid model   │
+│     fuses text + 76 heuristic features via GLU gate. This wider decision     │
+│     boundary is expected to improve probability calibration and push         │
+│     both FPR and FNR below their targets simultaneously.                     |
+|                                                                              │
 │  1. TEMPERATURE SCALING (Post-hoc Calibration)                               │
 │     Apply Platt scaling or temperature scaling to the logits so that         │
 │     P(malicious) values fully span [0.0, 1.0], enabling finer threshold      │
