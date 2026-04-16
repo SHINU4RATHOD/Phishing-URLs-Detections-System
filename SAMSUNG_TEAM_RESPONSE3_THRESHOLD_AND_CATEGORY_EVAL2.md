@@ -35,7 +35,7 @@ A decision threshold determines the probability cutoff at which the model classi
 │                                                                              │
 │  Trade-off:                                                                  │
 │    ┌─────────────────────┬──────────────────────┬───────────────────────┐    │
-│    │  Threshold Level     │  FPR (False Alarm)   │  FNR (Missed Attack) │    │
+│    │  Threshold Level    │  FPR (False Alarm)   │  FNR (Missed Attack)  │    │
 │    ├─────────────────────┼──────────────────────┼───────────────────────┤    │
 │    │  LOW    (e.g. 0.3)  │  ↑ HIGH (many FPs)   │  ↓ LOW  (few FNs)     │    │
 │    │  MEDIUM (e.g. 0.5)  │  ■ BALANCED          │  ■ BALANCED           │    │
