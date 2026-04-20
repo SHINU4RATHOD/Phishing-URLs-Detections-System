@@ -1,7 +1,6 @@
 # 📋 PhishGuard — Model Evaluation Report: Threshold Analysis & Category-Wise Performance
 
 > **Prepared by:** IIT Ropar — Phishing URL Detection Research Team  
-> **Date:** April 13, 2026  
 > **Model:** MiniLM-L12-H384-uncased + LoRA (Epoch 3 · Preprocessed Canonical URLs · Dataset V10)  
 > **Test Dataset:** 3,507,694 samples (2,516,634 Benign · 991,060 Malicious)
 
