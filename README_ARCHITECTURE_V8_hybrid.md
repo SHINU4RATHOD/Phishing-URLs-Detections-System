@@ -249,7 +249,7 @@ The hybrid preprocessing produces the richest dataset in the v8 system:
 
 ## 🎯 Model Results (MiniLM HybridFF v3)
 
-> **Test Evaluation** — 3,507,694 samples | Epoch 8 | Threshold: 0.50 | Calibration Temperature: 1.435
+> **Test Evaluation** — 3,507,694 samples | Epoch 8 | Threshold: 0.50 | 
 
 ### Performance Metrics
 
