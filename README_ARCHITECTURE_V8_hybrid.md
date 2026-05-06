@@ -392,7 +392,7 @@ python MiniLM_V2_hybrid_FF.py --mode onnx_inference --onnx-model int8
 | Inference | 102.98 ms |
 | **Total** | **103.78 ms** |
 
-### 4 Phase 3 deliverables update
+# 4 Phase 3 deliverables update
 1. hard Nagative Mining
 2. apply all new preprocessing and deploying the latest moodel on edge device
 3. mobile divice benchmarking 
