@@ -298,6 +298,13 @@ The hybrid preprocessing produces the richest dataset in the v8 system:
 
 ---
 
+### Threshold 0.999:
+    → ULTRA-CONSERVATIVE threshold. Near-zero false positives.
+    → FPR=0.0000% — virtually no legitimate URLs are blocked.
+    → FNR=100.00% — 1,035,757 phishing URLs evade detection.
+    → Use case: Pre-filter where blocking a legitimate URL is unacceptable.
+---
+
 ## 🚀 Running the Pipeline
 
 ### Preprocessing (Generate Hybrid Dataset)
