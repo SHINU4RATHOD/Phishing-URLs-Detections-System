@@ -332,7 +332,7 @@ python MiniLM_V2_hybrid_FF.py --mode onnx_inference --onnx-model int8
 
 # 2. Model Deployment
 
-## 4.1 Model Quantization & Size Reduction Pipeline
+## Model Quantization & Size Reduction Pipeline
 
 > **Reference**: [`1_Model_On_Raw_data/05_MiniLM/`](../../../1_Model_On_Raw_data/05_MiniLM/) (ONNX export pipeline)
 
