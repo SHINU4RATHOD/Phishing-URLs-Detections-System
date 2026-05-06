@@ -1,4 +1,4 @@
-# ⚡ URL Preprocessing Architecture V8: Hybrid GLU Fusion Mode
+#  URL Preprocessing Architecture V8: Hybrid GLU Fusion Mode
 > **The Hybrid GLU Fusion Pipeline** — A dual-tower architecture combining MiniLM text embeddings with 76 heuristic features via Gated Linear Unit fusion for **maximum phishing detection power**.
 
 ---
