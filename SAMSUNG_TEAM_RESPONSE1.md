@@ -68,7 +68,6 @@ This document addresses the seven technical items outlined by the Samsung team. 
 | 1 | **Hybrid GLU Fusion** — Concatenate MiniLM embeddings (384-dim) with rule-based features (68-dim bitmask, entropy, severity) via a gated linear unit | +2-5% recall on zero-day patterns |
 | 2 | **Threshold Calibration on Test Set** — Post-training Platt scaling for production-ready probability scores | Tighter FPR control at deployment |
 | 3 | **Hard Negative Mining** — Dedicated fine-tuning epoch on FP/FN samples from validation set | Direct FPR/FNR reduction |
-| 4 | **Ensemble Approach** — Lightweight voting between MiniLM + rule-based heuristic classifier | Redundancy for safety-critical deployment |
 
 ---
 
