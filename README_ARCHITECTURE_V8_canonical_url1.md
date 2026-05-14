@@ -78,7 +78,7 @@ flowchart TD
 ┌──────────────────────────────────────────────────────────────────────────┐
 │  STEP 2: HOST NORMALIZATION                                              │
 ├──────────────────────────────────────────────────────────────────────────┤
-│  • NFKC + IDNA 2008 Punycode encoding                                    │
+│  • NFKC + IDNA 2008 Punycode encoding --> Attacker URL: https://ｅｘａｍｐｌｅ.com (Using fullwidth ｅｘａｍｐｌｅ)NFKC Result: https://example.com (Collapses safely into the legitimate domain)  │
 │  • Leading/Trailing dot stripping (.com. → com)                          │
 │  • Unicode homoglyph resolution via NFKC                                 │
 └──────────────────────────────────────────────────────────────────────────┘
