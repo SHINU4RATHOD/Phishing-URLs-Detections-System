@@ -1,0 +1,73 @@
+================================================================================
+BALANCED 5M DATASET SUMMARY REPORT
+================================================================================
+Generated:       2026-06-09T14:45:34.557132
+Source Dataset:  D:\IIT ROPAR\phishing URL Detection\01_Research Tracker\2_Model_Building\PhishURLDetect-with-LLMS\2_Model _Preprocessed_data\Data_Preprocessing\DataPrep9\2_MiniLM_Hybrid_FF_V4\DATA\test_dataset.csv (50 rows)
+Output Dataset:  D:\IIT ROPAR\phishing URL Detection\01_Research Tracker\2_Model_Building\PhishURLDetect-with-LLMS\2_Model _Preprocessed_data\Data_Preprocessing\DataPrep9\2_MiniLM_Hybrid_FF_V4\DATA\Category_balanced_dataset_for_experiment\test_balanced_output.csv (10 rows)
+--------------------------------------------------------------------------------
+Category Name                       | Target (Balanced)  | Available (Source)
+--------------------------------------------------------------------------------
+Anchor_Fragment_Based_URL           | 0                  | 0                 
+Blob_URL                            | 0                  | 0                 
+CAPTCHA_Shield_URL                  | 0                  | 0                 
+Chrome_Internal_URL                 | 0                  | 0                 
+Cloud_Hosting_Abuse_URL             | 0                  | 0                 
+Compromised_CMS_URL                 | 0                  | 0                 
+Credential_Harvesting_Form_URL      | 1                  | 1                 
+Cryptocurrency_Scam_URL             | 0                  | 0                 
+DNS_Wildcard_Infinite_Subdomain     | 0                  | 0                 
+Data_URL                            | 0                  | 0                 
+Decimal_Hex_IP_URL                  | 0                  | 0                 
+Deep_Domain_Stacking_URL            | 0                  | 0                 
+Digital_Publishing_Platform_Abuse   | 0                  | 0                 
+Disposable_Email_Abuse_URL          | 0                  | 0                 
+Dynamic_DNS_URL                     | 0                  | 0                 
+Embedded_Email_Target_URL           | 0                  | 0                 
+FTP_SFTP_URL                        | 0                  | 0                 
+Fake_Subdomain_URL                  | 0                  | 0                 
+File_URL                            | 0                  | 0                 
+HasExcessiveParams                  | 0                  | 0                 
+HasRepeatedSubdomain                | 0                  | 0                 
+Hex_Encoded_URL                     | 0                  | 0                 
+Homoglyph_Domain_URL                | 0                  | 0                 
+IPFS_Decentralized_Hosting_URL      | 0                  | 0                 
+IP_Address_Unusual_Port_URL         | 0                  | 0                 
+IsBrandImpersonation                | 1                  | 2                 
+IsDynamicQuery                      | 0                  | 0                 
+IsGeoLocationSpecific               | 0                  | 0                 
+IsLanguageSpecific                  | 0                  | 0                 
+IsMaliciousPattern                  | 0                  | 0                 
+IsObfuscatedURL                     | 0                  | 0                 
+IsSessionBased                      | 0                  | 0                 
+IsSuspiciousFileType                | 1                  | 3                 
+IsSuspiciousKeyword                 | 1                  | 2                 
+IsWebAppPath                        | 1                  | 1                 
+JavaScript_URL                      | 0                  | 0                 
+Lookalike_TLD_Swap_URL              | 0                  | 0                 
+Mobile_AMP_URLs                     | 0                  | 0                 
+Multi_Redirect_Chain_URL            | 0                  | 0                 
+Nested_Encoding_Bypass_URL          | 0                  | 0                 
+Non_Alpha_Start_URL                 | 1                  | 1                 
+Non_English_Characters_URL          | 0                  | 0                 
+Phishing_Bypass_Path_URL            | 0                  | 0                 
+Protocol_Keyword_Subdomain_URL      | 0                  | 0                 
+Public_Document_Abuse_URL           | 0                  | 0                 
+Punycode_URL                        | 0                  | 0                 
+QR_Code_Phishing_URL                | 0                  | 0                 
+Redirect_URL_Open_Redirect          | 0                  | 0                 
+Shortened_URL                       | 0                  | 0                 
+Social_Engineering_Urgency_URL      | 0                  | 0                 
+Structural_Malformation_URL         | 0                  | 0                 
+Subdomain_Depth_Abuse_URL           | 0                  | 0                 
+Suspicious_TLD_URL                  | 1                  | 1                 
+Suspiciously_Long_Complex_URL       | 0                  | 0                 
+Telegram_Bot_URL                    | 0                  | 0                 
+Tunneling_URLs_Proxy_Abuse          | 0                  | 0                 
+TypoSquatting_URL                   | 0                  | 0                 
+UNKNOWN                             | 2                  | 33                
+URL_Protection_Service_Abuse        | 0                  | 0                 
+Unicode_URL                         | 0                  | 0                 
+Very_Short_URL                      | 1                  | 1                 
+--------------------------------------------------------------------------------
+Total Excluded URLs: 5
+================================================================================
