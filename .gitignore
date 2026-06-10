@@ -5,3 +5,7 @@ __pycache__/
 .tld_cache/
 .pytest_cache/
 .DS_Store
+
+# Exclude specific files from DataPrep10
+DataPrep10/mlflow_audit.py
+DataPrep10/run_e2e_verification.py
