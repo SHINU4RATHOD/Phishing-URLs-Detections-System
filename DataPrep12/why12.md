@@ -156,4 +156,15 @@ After training on the production corpus of **~4.9 million samples**, the empiric
 1. **Sigmoid (Production Standard):** Recommended for both backend and resource-constrained edge-device deployments. At scale, it delivers superior accuracy, lower loss, and reduces classification layer parameters by 50% (projecting to 1 logit instead of 2).
 2. **Softmax:** Only recommended for legacy systems where multi-class extensions are anticipated, or for small-scale datasets where class-competing gradients help mitigate initial convergence volatility.
 
+---
+
+## 8. MLOps Integration: Remote DagsHub MLflow Tracking
+
+To enable collaborative model tracking and remote version registry, both subprojects have been upgraded and integrated with a centralized remote DagsHub MLflow server:
+
+* **Remote Tracking Backend:** Integrated with `https://dagshub.com/SHINU4RATHOD/Phishing-URLs-Detections-System.mlflow`.
+* **Integrated Authentication:** Setup automatic environment variable parsing (`MLFLOW_TRACKING_USERNAME` and `MLFLOW_TRACKING_PASSWORD`) within the `core/mlflow_logger.py` lifecycle manager.
+* **Registry Integration:** Automated model registration for production-ready merged weights (`model_merged_full.pt`) directly to the DagsHub Model Registry upon meeting the target KPIs.
+
+
 
