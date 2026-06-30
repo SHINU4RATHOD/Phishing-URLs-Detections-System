@@ -1,6 +1,6 @@
-# 🔬 Comprehensive Tokenizer & Gating Rationale Report (DataPrep11)
+# 🔬 Comprehensive Tokenizer & Gating Rationale Report (DataPrep12)
 
-This report provides the technical rationale, architectural trade-offs, and empirical benchmarks comparing **WordPiece**, **Byte-Level BPE**, **SentencePiece Unigram**, and **Character-Level** tokenization schemes on the phishing URL detection corpus. It also documents the fusion gating upgrades (GLU vs. SwiGLU) and feature space optimizations implemented in the **DataPrep11** workspace.
+This report provides the technical rationale, architectural trade-offs, and empirical benchmarks comparing **WordPiece**, **Byte-Level BPE**, **SentencePiece Unigram**, and **Character-Level** tokenization schemes on the phishing URL detection corpus. It also documents the fusion gating upgrades (GLU vs. SwiGLU) and feature space optimizations implemented in the **DataPrep12** workspace.
 
 ---
 

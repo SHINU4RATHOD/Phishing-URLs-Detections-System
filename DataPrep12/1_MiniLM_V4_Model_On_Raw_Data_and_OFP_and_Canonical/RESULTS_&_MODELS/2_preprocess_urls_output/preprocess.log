@@ -1,0 +1,31 @@
+2026-06-30 17:49:55,113 [INFO] ================================================================================
+2026-06-30 17:49:55,113 [INFO] URL PREPROCESSING PIPELINE v8 (Elite Unmasking)
+2026-06-30 17:49:55,114 [INFO] Input: RESULTS_&_MODELS\1_url_cate_data10_output\data_cleaned.csv
+2026-06-30 17:49:55,120 [INFO] ================================================================================
+2026-06-30 17:49:55,120 [INFO] STARTING URL PREPROCESSING PIPELINE (v5 Refactored — model_url for OFP)
+2026-06-30 17:49:55,121 [INFO] ================================================================================
+2026-06-30 17:49:55,143 [WARNING] Insufficient samples (46) for entropy calibration; using defaults.
+2026-06-30 17:49:56,207 [WARNING] Suspicious host normalization: 'fujitsu-general.com' -> 'fujitsu-general.com' (homograph_score=0.40, mixed_scripts=True, confusables=False)
+2026-06-30 17:49:56,232 [WARNING] Suspicious host normalization: 'litopia21.com' -> 'litopia21.com' (homograph_score=0.30, mixed_scripts=False, confusables=True)
+2026-06-30 17:49:56,257 [WARNING] Suspicious host normalization: 'secure-admin-help-desk-center.sitey.me' -> 'secure-admin-help-desk-center.sitey.me' (homograph_score=0.40, mixed_scripts=True, confusables=False)
+2026-06-30 17:49:56,332 [WARNING] Suspicious host normalization: 'apple-identifiant.com' -> 'apple-identifiant.com' (homograph_score=0.40, mixed_scripts=True, confusables=False)
+2026-06-30 17:49:56,403 [WARNING] Suspicious host normalization: 'itau2x1.com' -> 'itau2x1.com' (homograph_score=0.30, mixed_scripts=False, confusables=True)
+2026-06-30 17:49:56,417 [WARNING] Suspicious host normalization: 'tokenaccesgenereateuseralfatangoastomanjielaquest9201524378.telikmaiber.com' -> 'tokenaccesgenereateuseralfatangoastomanjielaquest9201524378.telikmaiber.com' (homograph_score=0.30, mixed_scripts=False, confusables=True)
+2026-06-30 17:49:56,432 [WARNING] Suspicious host normalization: 'lym-ultra.com' -> 'lym-ultra.com' (homograph_score=0.40, mixed_scripts=True, confusables=False)
+2026-06-30 17:49:56,450 [WARNING] Suspicious host normalization: 'sora-to-kasai.forums-actifs.com' -> 'sora-to-kasai.forums-actifs.com' (homograph_score=0.40, mixed_scripts=True, confusables=False)
+2026-06-30 17:49:56,486 [WARNING] Suspicious host normalization: 'win-rar.com' -> 'win-rar.com' (homograph_score=0.40, mixed_scripts=True, confusables=False)
+2026-06-30 17:49:56,679 [INFO] Chunk 0 -> kept=45 rejected=1 local_private=0 total_seen=46
+2026-06-30 17:49:56,680 [INFO] Persisted 0 dedup keys to cache.
+2026-06-30 17:49:56,681 [INFO] Processing complete. Kept 45 of 46 rows.
+2026-06-30 17:49:56,681 [INFO] Drop reasons: {'unparseable': 1}
+2026-06-30 17:49:56,681 [INFO] Starting Synchronized Stratified Splitting for modes: ['raw_orig']
+2026-06-30 17:49:56,756 [INFO] Splitter: Counted 45 rows across 12 groups in urls_preprocessed.csv
+2026-06-30 17:49:56,757 [INFO] Splitter Targets: Total Train=31, Val=5, Samples=45
+2026-06-30 17:49:56,856 [INFO] Synchronized splitting complete. Train=31 Val=5 Test=9
+2026-06-30 17:49:56,897 [INFO] Splitter: Counted 31 rows across 12 groups in raw_orig_train.csv
+2026-06-30 17:49:56,904 [INFO] Splitter: Counted 5 rows across 3 groups in raw_orig_val.csv
+2026-06-30 17:49:56,920 [INFO] Splitter: Counted 9 rows across 6 groups in raw_orig_test.csv
+2026-06-30 17:49:56,923 [INFO] Report generated: D:\IIT ROPAR\phishing URL Detection\01_Research Tracker\2_Model_Building\PhishURLDetect-with-LLMS\DataPrep11\1_MiniLM_V4_Model_On_Raw_Data_and_OFP_and_Canonical\RESULTS_&_MODELS\2_preprocess_urls_output\report_splits_raw_orig.txt
+2026-06-30 17:49:56,923 [INFO] ================================================================================
+2026-06-30 17:49:56,923 [INFO] PIPELINE COMPLETE
+2026-06-30 17:49:56,924 [INFO] ================================================================================

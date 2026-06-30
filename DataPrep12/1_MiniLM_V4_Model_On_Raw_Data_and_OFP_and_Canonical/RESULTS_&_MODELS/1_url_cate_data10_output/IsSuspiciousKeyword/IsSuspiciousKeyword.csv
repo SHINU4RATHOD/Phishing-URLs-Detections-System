@@ -6,5 +6,5 @@
 "http://gospaconsulting.com/attachments/www3.internetbanking.caixa.gov.br/siibc/index.processa/cadastro.php","1","IsSuspiciousKeyword","banking","2.0","7.0","SuspiciousFile:.php; SuspiciousKeyword:banking"
 "http://tokenaccesgenereateuseralfatangoastomanjielaquest9201524378.telikmaiber.com/bank/cibc","1","IsSuspiciousKeyword","bank","2.0","2.0","SuspiciousKeyword:bank"
 "http://lym-ultra.com/signin.accountverifications","1","IsSuspiciousKeyword","signin","2.0","5.0","SuspiciousKeyword:signin; WebAppPath:account"
-"http://maishaera.agnesscott.org/dropbox/business-upload-secure-document/login/","1","IsSuspiciousKeyword","secure","2.0","15.0","BrandImpersonation:dropbox@agnesscott.org; SuspiciousKeyword:secure; WebAppPath:secure; CredentialForm:login+dropbox@agnesscott.org"
+"http://maishaera.agnesscott.org/dropbox/business-upload-secure-document/login/","1","IsSuspiciousKeyword","login","2.0","15.0","BrandImpersonation:dropbox@agnesscott.org; SuspiciousKeyword:login; WebAppPath:secure; CredentialForm:login+dropbox@agnesscott.org"
 "https://vcoemer.com/login.php?l=_JeHFUq_VJOXK0QWHtoGYDw1774256418&fid.13InboxLight.aspxn.1774256418&fid.125289964252813InboxLight99642_Product-userid&userid=","1","IsSuspiciousKeyword","login","2.0","15.0","LongComplex:entropy=5.46; SuspiciousFile:.php; SuspiciousKeyword:login; WebAppPath:login; StructuralMalformed:opaque_payload"

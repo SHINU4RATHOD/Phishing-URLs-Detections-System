@@ -3,7 +3,7 @@ URL Categorization Summary
 
 Input file     : ../0_DATA/test_dataset.csv
 Processed URLs : 50
-Duration       : 0:00:01.474416
+Duration       : 0:00:01.284246
 
 Per-Category Statistics
 --------------------------------------------------------------------------------

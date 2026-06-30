@@ -6,6 +6,12 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 
-# Exclude specific files from DataPrep10
-DataPrep10/mlflow_audit.py
-DataPrep10/run_e2e_verification.py
+# Ignore large binary models and dataset directories
+**/RESULTS_&_MODELS/
+**/0_DATA/
+**/best_model_epoch_*/
+**/checkpoints/
+*.pt
+*.onnx
+*.pkl
+
