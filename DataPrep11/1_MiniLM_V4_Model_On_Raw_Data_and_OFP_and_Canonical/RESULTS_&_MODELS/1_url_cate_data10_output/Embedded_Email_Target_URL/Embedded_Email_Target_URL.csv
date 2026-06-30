@@ -1,0 +1,2 @@
+"url","label","matched_category","detection_context","detection_score_component","detection_score","detection_explain"
+"http://hugugle.com/jay/25GB/index.php?email=hitoshi.masuko@lr.org","1","Embedded_Email_Target_URL","email=hi***@lr.org","2.0","9.0","LongComplex:entropy=4.58; SuspiciousFile:.php; EmbeddedEmail:email=hi***@lr.org"

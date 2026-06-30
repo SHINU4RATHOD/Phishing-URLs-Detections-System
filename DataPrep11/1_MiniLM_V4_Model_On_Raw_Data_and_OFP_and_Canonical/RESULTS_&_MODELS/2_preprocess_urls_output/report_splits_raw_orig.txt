@@ -1,0 +1,105 @@
+================================================================================
+URL Split Report (raw_orig mode)
+================================================================================
+Generated: 2026-06-30T12:15:01.284079+00:00 UTC
+Target Ratios: Train: 80.0%, Val: 10.0%, Test: 10.0%
+
+1. OVERALL SPLIT STATISTICS
+--------------------------------------------------------------------------------
+Total Samples: 45
+Train Set:           31 (68.89%)
+Val Set:              5 (11.11%)
+Test Set:             9 (20.00%)
+
+2. LABEL (CLASS) DISTRIBUTION
+--------------------------------------------------------------------------------
+Label      |      Train |        Val |       Test |      Total
+--------------------------------------------------------------------------------
+0          |         21 |          3 |          5 |         29
+1          |         10 |          2 |          4 |         16
+3. UNIVERSAL CATEGORY COVERAGE DASHBOARD
+--------------------------------------------------------------------------------
+Category                         |    Train |      Val |     Test | Status
+--------------------------------------------------------------------------------
+Anchor_Fragment_Based_URL        |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Blob_URL                         |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+CAPTCHA_Shield_URL               |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Chrome_Internal_URL              |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Cloud_Hosting_Abuse_URL          |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Compromised_CMS_URL              |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Credential_Harvesting_Form_URL   |        1 |        0 |        0 | ⚠️ MISSING: Val,Test
+Cryptocurrency_Scam_URL          |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+DNS_Wildcard_Infinite_Subdomain  |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Data_URL                         |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Decimal_Hex_IP_URL               |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Deep_Domain_Stacking_URL         |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Digital_Publishing_Platform_Abuse |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Disposable_Email_Abuse_URL       |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Dynamic_DNS_URL                  |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Embedded_Email_Target_URL        |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+FTP_SFTP_URL                     |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Fake_Subdomain_URL               |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+File_URL                         |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+HasExcessiveParams               |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+HasRepeatedSubdomain             |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Hex_Encoded_URL                  |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Homoglyph_Domain_URL             |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+IPFS_Decentralized_Hosting_URL   |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+IP_Address_Unusual_Port_URL      |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+IsBrandImpersonation             |        1 |        0 |        1 | ⚠️ MISSING: Val
+IsDynamicQuery                   |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+IsGeoLocationSpecific            |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+IsLanguageSpecific               |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+IsMaliciousPattern               |        1 |        0 |        0 | ⚠️ MISSING: Val,Test
+IsObfuscatedURL                  |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+IsSessionBased                   |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+IsSuspiciousFileType             |        2 |        1 |        1 | ✅ OK
+IsSuspiciousKeyword              |        1 |        0 |        1 | ⚠️ MISSING: Val
+IsWebAppPath                     |        1 |        0 |        0 | ⚠️ MISSING: Val,Test
+JavaScript_URL                   |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Lookalike_TLD_Swap_URL           |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Mobile_AMP_URLs                  |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Multi_Redirect_Chain_URL         |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Nested_Encoding_Bypass_URL       |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Non_Alpha_Start_URL              |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Non_English_Characters_URL       |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Phishing_Bypass_Path_URL         |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Protocol_Keyword_Subdomain_URL   |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Public_Document_Abuse_URL        |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Punycode_URL                     |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+QR_Code_Phishing_URL             |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Redirect_URL_Open_Redirect       |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Shortened_URL                    |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Social_Engineering_Urgency_URL   |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Structural_Malformation_URL      |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Subdomain_Depth_Abuse_URL        |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Suspicious_TLD_URL               |        1 |        0 |        0 | ⚠️ MISSING: Val,Test
+Suspiciously_Long_Complex_URL    |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Telegram_Bot_URL                 |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Tunneling_URLs_Proxy_Abuse       |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+TypoSquatting_URL                |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+URL_Protection_Service_Abuse     |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Unicode_URL                      |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+Very_Short_URL                   |        0 |        0 |        0 | ⚠️ MISSING: Train,Val,Test
+
+4. TLD RISK DISTRIBUTION PER SPLIT
+--------------------------------------------------------------------------------
+Risk Level   |      Train |        Val |       Test |      Total
+--------------------------------------------------------------------------------
+NORMAL       |         26 |          5 |          8 |         39
+HIGH         |          1 |          0 |          0 |          1
+
+5. GROUP DISTRIBUTION PER SPLIT (LABEL, CATEGORY, TLD_RISK)
+--------------------------------------------------------------------------------
+  (0, 'UNKNOWN', 'CONTEXTUAL'): train=1 val=0 test=1 total=2
+  (0, 'UNKNOWN', 'HIGH'): train=1 val=0 test=0 total=1
+  (0, 'UNKNOWN', 'NORMAL'): train=19 val=3 test=4 total=26
+  (1, 'Credential_Harvesting_Form_URL', 'NORMAL'): train=1 val=0 test=0 total=1
+  (1, 'IsBrandImpersonation', 'NORMAL'): train=1 val=0 test=1 total=2
+  (1, 'IsMaliciousPattern', 'CONTEXTUAL'): train=1 val=0 test=0 total=1
+  (1, 'IsSuspiciousFileType', 'NORMAL'): train=2 val=1 test=1 total=4
+  (1, 'IsSuspiciousKeyword', 'NORMAL'): train=1 val=0 test=1 total=2
+  (1, 'IsWebAppPath', 'NORMAL'): train=1 val=0 test=0 total=1
+  (1, 'Suspicious_TLD_URL', 'CONTEXTUAL'): train=1 val=0 test=0 total=1
+  (1, 'UNKNOWN', 'CONTEXTUAL'): train=1 val=0 test=0 total=1
+  (1, 'UNKNOWN', 'NORMAL'): train=1 val=1 test=1 total=3

@@ -1,0 +1,2 @@
+"url","label","matched_category","detection_context","detection_score_component","detection_score","detection_explain"
+"http://www.earthskyus.org/2018/update/security_update/index.php?rand=13InboxLightaspxn.1774256418&amp;fid.4.1252899642&amp;fid=1&amp;fav.1&amp;rand.13InboxLight.aspxn.1774256418&amp;fid.1252899642&amp;fid.1&amp;fav.1&amp;email=abuse@ekush.com","1","HasExcessiveParams","params=9","2.0","17.0","LongComplex:entropy=5.05; ExcessiveParams:params=9; SuspiciousFile:.php; SuspiciousKeyword:security; StructuralMalformed:opaque_payload; ProtoSubdomain:keyword:www"

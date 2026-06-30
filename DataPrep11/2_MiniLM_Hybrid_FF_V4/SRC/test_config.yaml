@@ -1,0 +1,88 @@
+# Centralized Configuration for Hybrid Pipeline Sanity Test
+
+reproducibility:
+  seed: 42
+
+data_paths:
+  train_csv: "RESULTS_&_MODELS/2_preprocess_urls_output/urls_hybrid_train.csv"
+  val_csv: "RESULTS_&_MODELS/2_preprocess_urls_output/urls_hybrid_val.csv"
+  test_csv: "RESULTS_&_MODELS/2_preprocess_urls_output/urls_hybrid_test.csv"
+  save_root: "RESULTS_&_MODELS/3_saved_models/MiniLM_HybridFF_v4_Sanity"
+
+model:
+  name: "microsoft/MiniLM-L12-H384-uncased"
+  max_len: 16       # Very small length for extremely fast test
+  num_classes: 2
+  classification_layer_type: "softmax"
+  dropout: 0.15
+  text_embed_dim: 384
+  heuristic_dim: 87
+  heuristic_mlp_hidden: 256
+  heuristic_mlp_output: 192
+  glu_hidden: 384
+  gating_type: "GLU"
+  classifier_dims: [192, 64]
+  use_custom_tokenizer_byte-level_BPE: false
+  use_custom_tokenizer_SentencePiece_Unigram_BPE: false
+  custom_tokenizer_vocab_size: 50000
+  custom_tokenizer_path: "RESULTS_&_MODELS/custom_bpe_tokenizer.json"
+
+training:
+  batch_size: 2
+  num_epochs: 1
+  weight_decay: 0.01
+  patience: 3
+  grad_accum_steps: 1
+  grad_clip_norm: 1.0
+
+learning_rate:
+  lr: 0.0001
+  warmup_ratio: 0.03
+  min_ratio: 0.001
+
+lora:
+  r: 4              # Tiny rank for extremely fast forward/backward
+  alpha: 8
+  dropout: 0.05
+  target_modules: ["query", "key", "value", "dense", "output.dense"]
+
+loss:
+  focal_gamma: 2.0
+  focal_alpha: [0.35, 0.65]
+  label_smoothing: 0.05
+
+class_balancing:
+  use_weighted_sampling: false
+
+optimization:
+  pruning_ratio: 0.0
+  use_amp: false   # Disable AMP for clean CPU compatibility
+
+export:
+  export_onnx: true
+  export_quantized: true
+  onnx_opset: 18
+
+mlflow:
+  enabled: true
+  tracking_uri: "https://dagshub.com/SHINU4RATHOD/Phishing-URLs-Detections-System.mlflow"
+  username: "SHINU4RATHOD"
+  password: "42c5f8cad78f7d993b95a00a28553d60f93866b7"
+  dagshub_repo: "SHINU4RATHOD/Phishing-URLs-Detections-System"
+  experiment_name: "PhishURL-Detection-Hybrid-Sanity"
+  run_name: "MiniLM-Hybrid-Sanity-Test"
+  register_model: true
+  model_name: "PhishURL-Hybrid-Classifier-Sanity"
+
+kpi_targets:
+  target_accuracy: 0.0
+  target_precision: 0.0
+  target_recall: 0.0
+  max_fnr: 1.0
+  max_fpr: 1.0
+  max_model_size_mb: 200.0
+
+hardware:
+  device: "auto"    # Set to "cuda" or "cpu" or "auto"
+  num_workers: 0   # Windows multiprocess DataLoader bypass
+  pin_memory: false

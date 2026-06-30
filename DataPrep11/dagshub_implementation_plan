@@ -1,0 +1,93 @@
+# Implementation Plan: DagsHub MLflow Tracking Integration
+
+This document details the plan to integrate DagsHub hosted MLflow tracking into both subprojects (`1_MiniLM_V4_Model_On_Raw_Data_and_OFP_and_Canonical` and `2_MiniLM_Hybrid_FF_V4`).
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> * **Zero-Dependency Core Integration:** The integration will support DagsHub in two ways:
+>   1. **DagsHub Python Client:** If the `dagshub` python library is installed, the code will automatically use `dagshub.init(repo_owner, repo_name, mlflow=True)` to handle authentication and remote URI configuration.
+>   2. **Manual Credentials Fallback:** If `dagshub` is not installed, the logger will set the `MLFLOW_TRACKING_USERNAME` and `MLFLOW_TRACKING_PASSWORD` environment variables programmatically from the configuration settings, enabling standard HTTP Basic Authentication over HTTPS.
+> * **Separation of Sanity & Production Configs:**
+>   - **`test_config.yaml`:** Will continue to use `sqlite:///mlflow.db` to ensure that local verification runs (`run_e2e_verification.py`) remain completely offline, fast, and independent of remote network conditions or credential availability.
+>   - **`4_config.yaml`:** Will receive new configuration parameters (`username`, `password`, `dagshub_repo`) for remote deployment.
+
+---
+
+## Proposed Changes
+
+### Configuration Schema Updates
+
+#### [MODIFY] [Subproject 1 Config Loader (core/config.py)](file:///d:/IIT ROPAR/phishing URL Detection/01_Research Tracker/2_Model_Building/PhishURLDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep11/1_MiniLM_V4_Model_On_Raw_Data_and_OFP_and_Canonical/SRC/core/config.py)
+#### [MODIFY] [Subproject 2 Config Loader (core/config.py)](file:///d:/IIT ROPAR/phishing URL Detection/01_Research Tracker/2_Model_Building/PhishURLDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep11/2_MiniLM_Hybrid_FF_V4/SRC/core/config.py)
+- Introduce the following class variables:
+  - `MLFLOW_TRACKING_USERNAME: str = ""`
+  - `MLFLOW_TRACKING_PASSWORD: str = ""`
+  - `MLFLOW_DAGSHUB_REPO: str = ""`
+- In `load_from_yaml()` and `_manual_parse()`, read these attributes from the `mlflow:` block.
+
+---
+
+### Centralized Config File Upgrades
+
+#### [MODIFY] [Subproject 1 Config (4_config.yaml)](file:///d:/IIT ROPAR/phishing URL Detection/01_Research Tracker/2_Model_Building/PhishURLDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep11/1_MiniLM_V4_Model_On_Raw_Data_and_OFP_and_Canonical/SRC/4_config.yaml)
+#### [MODIFY] [Subproject 2 Config (4_config.yaml)](file:///d:/IIT ROPAR/phishing URL Detection/01_Research Tracker/2_Model_Building/PhishURLDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep11/2_MiniLM_Hybrid_FF_V4/SRC/4_config.yaml)
+- Append placeholder tracking parameters in the `mlflow` block:
+```yaml
+mlflow:
+  enabled: true
+  tracking_uri: "sqlite:///mlflow.db"  # Change to "https://dagshub.com/<username>/<repo_name>.mlflow" for DagsHub
+  username: ""                         # DagsHub username (or set env MLFLOW_TRACKING_USERNAME)
+  password: ""                         # DagsHub password/token (or set env MLFLOW_TRACKING_PASSWORD)
+  dagshub_repo: ""                     # Format: "<username>/<repo_name>" to auto-init via dagshub client
+  experiment_name: "PhishURL-Detection-MiniLM"
+  run_name: "MiniLM-V4-Production-Pipeline"
+  register_model: true
+  model_name: "PhishURL-MiniLM-Classifier"
+```
+
+---
+
+### MLflow Manager Authentication Logic
+
+#### [MODIFY] [Subproject 1 Logger (core/mlflow_logger.py)](file:///d:/IIT ROPAR/phishing URL Detection/01_Research Tracker/2_Model_Building/PhishURLDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep11/1_MiniLM_V4_Model_On_Raw_Data_and_OFP_and_Canonical/SRC/core/mlflow_logger.py)
+#### [MODIFY] [Subproject 2 Logger (core/mlflow_logger.py)](file:///d:/IIT ROPAR/phishing URL Detection/01_Research Tracker/2_Model_Building/PhishURLDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep11/2_MiniLM_Hybrid_FF_V4/SRC/core/mlflow_logger.py)
+- Update `start_run()` to handle DagsHub client initialization or manual credentials setup:
+```python
+            # Resolve DagsHub integration first if specified
+            if Config.MLFLOW_DAGSHUB_REPO:
+                try:
+                    import dagshub
+                    repo_owner, repo_name = Config.MLFLOW_DAGSHUB_REPO.split('/')
+                    logger.info(f"[MLflow] Initializing DagsHub Client: {Config.MLFLOW_DAGSHUB_REPO}")
+                    dagshub.init(repo_owner=repo_owner, repo_name=repo_name, mlflow=True)
+                except ImportError:
+                    logger.warning("[MLflow] 'dagshub' package not found. Falling back to basic HTTP authentication.")
+                    if Config.MLFLOW_TRACKING_USERNAME:
+                        os.environ["MLFLOW_TRACKING_USERNAME"] = Config.MLFLOW_TRACKING_USERNAME
+                    if Config.MLFLOW_TRACKING_PASSWORD:
+                        os.environ["MLFLOW_TRACKING_PASSWORD"] = Config.MLFLOW_TRACKING_PASSWORD
+                except Exception as e:
+                    logger.error(f"[MLflow] Failed to initialize DagsHub client: {e}")
+            else:
+                # Manual credential fallback (also handles non-DagsHub basic auth endpoints)
+                if Config.MLFLOW_TRACKING_USERNAME:
+                    os.environ["MLFLOW_TRACKING_USERNAME"] = Config.MLFLOW_TRACKING_USERNAME
+                if Config.MLFLOW_TRACKING_PASSWORD:
+                    os.environ["MLFLOW_TRACKING_PASSWORD"] = Config.MLFLOW_TRACKING_PASSWORD
+
+            # Configure tracking backend
+            self.mlflow.set_tracking_uri(Config.MLFLOW_TRACKING_URI)
+```
+
+---
+
+## Verification Plan
+
+### Offline Verification
+- Execute `run_e2e_verification.py` which runs offline sanity tests using `test_config.yaml` to ensure the authentication configurations do not break default local SQLite tracking.
+
+### Online Verification (Manual)
+- The user can verify remote logging to DagsHub by setting their username, password/token, and repo fields in `4_config.yaml` and launching training manually.

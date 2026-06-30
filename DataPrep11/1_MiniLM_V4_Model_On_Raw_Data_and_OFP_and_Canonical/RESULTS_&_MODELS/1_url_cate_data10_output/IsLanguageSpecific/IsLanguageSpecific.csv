@@ -1,0 +1,2 @@
+"url","label","matched_category","detection_context","detection_score_component","detection_score","detection_explain"
+"http://onefd.edu.dz.forexwinz.com/facebook/AR/","1","IsLanguageSpecific","path=ar","1.0","6.0","BrandImpersonation:facebook@forexwinz.com; LanguageSpecific:path=ar"

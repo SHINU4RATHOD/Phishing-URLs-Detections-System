@@ -1,0 +1,135 @@
+URL Categorization Summary
+================================================================================
+
+Input file     : ../0_DATA/test_dataset.csv
+Processed URLs : 50
+Duration       : 0:00:01.474416
+
+Per-Category Statistics
+--------------------------------------------------------------------------------
+Non_English_Characters_URL
+  Total      : 1
+  Benign     : 1
+  Malicious  : 0
+  Unknown    : 0
+
+Hex_Encoded_URL
+  Total      : 1
+  Benign     : 1
+  Malicious  : 0
+  Unknown    : 0
+
+Suspiciously_Long_Complex_URL
+  Total      : 5
+  Benign     : 1
+  Malicious  : 4
+  Unknown    : 0
+
+Suspicious_TLD_URL
+  Total      : 2
+  Benign     : 0
+  Malicious  : 2
+  Unknown    : 0
+
+HasExcessiveParams
+  Total      : 1
+  Benign     : 0
+  Malicious  : 1
+  Unknown    : 0
+
+IsBrandImpersonation
+  Total      : 4
+  Benign     : 1
+  Malicious  : 3
+  Unknown    : 0
+
+IsLanguageSpecific
+  Total      : 1
+  Benign     : 0
+  Malicious  : 1
+  Unknown    : 0
+
+IsObfuscatedURL
+  Total      : 1
+  Benign     : 0
+  Malicious  : 1
+  Unknown    : 0
+
+IsSuspiciousFileType
+  Total      : 6
+  Benign     : 1
+  Malicious  : 5
+  Unknown    : 0
+
+IsSuspiciousKeyword
+  Total      : 9
+  Benign     : 0
+  Malicious  : 9
+  Unknown    : 0
+
+IsMaliciousPattern
+  Total      : 1
+  Benign     : 0
+  Malicious  : 1
+  Unknown    : 0
+
+IsWebAppPath
+  Total      : 4
+  Benign     : 0
+  Malicious  : 4
+  Unknown    : 0
+
+Structural_Malformation_URL
+  Total      : 4
+  Benign     : 1
+  Malicious  : 3
+  Unknown    : 0
+
+Very_Short_URL
+  Total      : 1
+  Benign     : 1
+  Malicious  : 0
+  Unknown    : 0
+
+Non_Alpha_Start_URL
+  Total      : 1
+  Benign     : 1
+  Malicious  : 0
+  Unknown    : 0
+
+Credential_Harvesting_Form_URL
+  Total      : 1
+  Benign     : 0
+  Malicious  : 1
+  Unknown    : 0
+
+Compromised_CMS_URL
+  Total      : 1
+  Benign     : 0
+  Malicious  : 1
+  Unknown    : 0
+
+Embedded_Email_Target_URL
+  Total      : 1
+  Benign     : 0
+  Malicious  : 1
+  Unknown    : 0
+
+Protocol_Keyword_Subdomain_URL
+  Total      : 1
+  Benign     : 0
+  Malicious  : 1
+  Unknown    : 0
+
+Top Detection Explanations
+--------------------------------------------------------------------------------
+     1 x VeryShort:len=14
+     1 x NonAlphaStartHost:digit_start
+     1 x SuspiciousFile:.php
+     1 x LongComplex:entropy=5.05; ExcessiveParams:params=9; SuspiciousFile:.php; SuspiciousKeyword:security; StructuralMalformed:opaque_payload; ProtoSubdomain:keyword:www
+     1 x SuspiciousKeyword:update
+     1 x HexEncoding:percent_encoded_count=7; LongComplex:entropy=4.75; BrandImpersonation:whatsapp@schminktante.de; StructuralMalformed:opaque_payload; NonEnglishChars:raw_non_ascii_chars
+     1 x SuspiciousTLD:me; SuspiciousKeyword:secure
+     1 x LongComplex:entropy=4.66; SuspiciousTLD:fr; Obfuscated:base64_blob; SuspiciousFile:.php; SuspiciousKeyword:login; MaliciousPattern:cmd=; WebAppPath:login; StructuralMalformed:opaque_payload; CompromisedCMS:wp-content/themes+login.php
+     1 x BrandImpersonation:facebook@forexwinz.com; LanguageSpecific:path=ar
+     1 x BrandImpersonation:apple@apple-identifiant.com

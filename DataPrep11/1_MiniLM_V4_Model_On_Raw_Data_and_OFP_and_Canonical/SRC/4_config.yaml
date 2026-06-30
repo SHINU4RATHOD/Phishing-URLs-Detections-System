@@ -1,0 +1,85 @@
+# Centralized Configuration file for MiniLM Phishing URL Detection Pipeline
+
+reproducibility:
+  seed: 42
+
+data_paths:
+  train_csv: "/home/hp/SHINU RATHOD/URLsPhishDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep10/1_MiniLM_V4_Model_On_Raw_Data_and_OFP_and_Canonical_Inferencing/RESULTS_&_MODELS/2_preprocess_urls_output/raw_orig_train.csv"
+  val_csv: "/home/hp/SHINU RATHOD/URLsPhishDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep10/1_MiniLM_V4_Model_On_Raw_Data_and_OFP_and_Canonical_Inferencing/RESULTS_&_MODELS/2_preprocess_urls_output/raw_orig_val.csv"
+  test_csv: "/home/hp/SHINU RATHOD/URLsPhishDetect-with-LLMS/2_Model _Preprocessed_data/Data_Preprocessing/DataPrep10/1_MiniLM_V4_Model_On_Raw_Data_and_OFP_and_Canonical_Inferencing/RESULTS_&_MODELS/2_preprocess_urls_output/raw_orig_test.csv"
+  save_root: "RESULTS_&_MODELS/3_saved_models/MiniLM_raw_orig_Unified_Final_Dataset_SentencePiece_Unigram_BPE"
+
+model:
+  name: "microsoft/MiniLM-L12-H384-uncased"
+  max_len: 128
+  num_classes: 2
+  classification_layer_type: "softmax"  # sigmoid
+  dropout: 0.08
+  classifier_dims: [384, 512, 256, 128, 64]
+  use_custom_tokenizer_byte-level_BPE: false
+  use_custom_tokenizer_SentencePiece_Unigram_BPE: false
+  custom_tokenizer_vocab_size: 50000
+  custom_tokenizer_path: "RESULTS_&_MODELS/custom_bpe_tokenizer.json"
+
+training:
+  batch_size: 256
+  num_epochs: 5
+  weight_decay: 0.01
+  patience: 3
+  grad_accum_steps: 3
+  grad_clip_norm: 1.0
+
+learning_rate:
+  lr: 0.00015
+  warmup_ratio: 0.05
+  min_ratio: 0.001
+
+lora:
+  r: 32
+  alpha: 64
+  dropout: 0.05
+  target_modules: ["query", "key", "value", "dense", "output.dense"]
+
+loss:
+  focal_gamma_pos: 2.0
+  focal_gamma_neg: 2.0
+  focal_alpha: [0.50, 0.50]
+  label_smoothing: 0.05
+
+class_balancing:
+  use_stratified_kfold: false
+  kfold_splits: 5
+  use_weighted_sampling: false
+
+optimization:
+  pruning_ratio: 0.0
+  use_amp: true
+
+export:
+  export_onnx: true
+  export_quantized: true
+  onnx_opset: 18
+
+mlflow:
+  enabled: true
+  tracking_uri: "https://dagshub.com/SHINU4RATHOD/Phishing-URLs-Detections-System.mlflow"
+  username: "SHINU4RATHOD"
+  password: "42c5f8cad78f7d993b95a00a28553d60f93866b7"
+  dagshub_repo: "SHINU4RATHOD/Phishing-URLs-Detections-System"
+  experiment_name: "PhishURL-Detection-MiniLM"
+  run_name: "MiniLM-V4-Production-Pipeline"
+  register_model: true
+  model_name: "PhishURL-MiniLM-Classifier"
+
+kpi_targets:
+  target_accuracy: 0.98
+  target_precision: 0.98
+  target_recall: 0.90
+  max_fnr: 0.10
+  max_fpr: 0.01
+  max_model_size_mb: 40.0
+
+hardware:
+  device: "auto"  # Set to "cuda" or "cpu" or "auto"
+  num_workers: 16
+  pin_memory: true

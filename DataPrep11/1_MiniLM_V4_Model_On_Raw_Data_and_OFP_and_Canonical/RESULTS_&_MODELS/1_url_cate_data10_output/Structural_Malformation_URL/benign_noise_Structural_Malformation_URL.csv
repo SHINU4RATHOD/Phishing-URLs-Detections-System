@@ -1,0 +1,2 @@
+"url","label","matched_category","detection_context","detection_score_component","detection_score","detection_explain"
+"schminktante.de/whatsapp://send?text=Februar%202019%20auf%20Sylt:%20Syltglück%20geteilt%20durch%2020-https://schminktante.de/2019/03/10/februar-2019-auf-sylt-syltglueck-geteilt-durch-20/","0","Structural_Malformation_URL","opaque_payload","3.0","14.0","HexEncoding:percent_encoded_count=7; LongComplex:entropy=4.75; BrandImpersonation:whatsapp@schminktante.de; StructuralMalformed:opaque_payload; NonEnglishChars:raw_non_ascii_chars"
