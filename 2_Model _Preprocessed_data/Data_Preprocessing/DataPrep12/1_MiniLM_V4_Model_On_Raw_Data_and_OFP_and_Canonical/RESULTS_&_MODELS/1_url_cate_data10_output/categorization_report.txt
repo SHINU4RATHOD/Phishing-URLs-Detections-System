@@ -3,7 +3,7 @@ URL Categorization Summary
 
 Input file     : ../0_DATA/test_dataset.csv
 Processed URLs : 50
-Duration       : 0:00:01.284246
+Duration       : 0:00:01.951367
 
 Per-Category Statistics
 --------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ Top Detection Explanations
      1 x VeryShort:len=14
      1 x NonAlphaStartHost:digit_start
      1 x SuspiciousFile:.php
-     1 x LongComplex:entropy=5.05; ExcessiveParams:params=9; SuspiciousFile:.php; SuspiciousKeyword:security; StructuralMalformed:opaque_payload; ProtoSubdomain:keyword:www
+     1 x LongComplex:entropy=5.05; ExcessiveParams:params=9; SuspiciousFile:.php; SuspiciousKeyword:update; StructuralMalformed:opaque_payload; ProtoSubdomain:keyword:www
      1 x SuspiciousKeyword:update
      1 x HexEncoding:percent_encoded_count=7; LongComplex:entropy=4.75; BrandImpersonation:whatsapp@schminktante.de; StructuralMalformed:opaque_payload; NonEnglishChars:raw_non_ascii_chars
      1 x SuspiciousTLD:me; SuspiciousKeyword:secure
