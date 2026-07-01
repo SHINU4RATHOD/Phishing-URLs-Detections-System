@@ -7,7 +7,7 @@ data_paths:
   train_csv: "RESULTS_&_MODELS/2_preprocess_urls_output/urls_hybrid_train.csv"
   val_csv: "RESULTS_&_MODELS/2_preprocess_urls_output/urls_hybrid_val.csv"
   test_csv: "RESULTS_&_MODELS/2_preprocess_urls_output/urls_hybrid_test.csv"
-  save_root: "RESULTS_&_MODELS/3_saved_models/MiniLM_HybridFF_v4_Sanity"
+  save_root: "RESULTS_&_MODELS/3_saved_models/MiniLM_Hybrid_sanity_test"
 
 model:
   name: "microsoft/MiniLM-L12-H384-uncased"
@@ -64,7 +64,7 @@ export:
   onnx_opset: 18
 
 mlflow:
-  enabled: true
+  enabled: false
   tracking_uri: "https://dagshub.com/SHINU4RATHOD/Phishing-URLs-Detections-System.mlflow"
   username: "SHINU4RATHOD"
   password: "42c5f8cad78f7d993b95a00a28553d60f93866b7"
